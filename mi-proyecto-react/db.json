@@ -1,0 +1,41 @@
+{
+  "personas": [
+    {
+      "tipoDocumento": "CC",
+      "numeroDocumento": "123456788",
+      "nombre": "Manuel",
+      "apellido": "Jimenez ",
+      "direccion": "cll brazil ",
+      "ciudad": "Cucuta",
+      "fechaNacimiento": "2026-09-07",
+      "correo": "manu@jfuern",
+      "celular": "67895438765",
+      "id": "AOhXaYZiiUQ"
+    },
+    {
+      "tipoDocumento": "CE",
+      "numeroDocumento": "n854930254",
+      "nombre": "mario",
+      "apellido": "taquillo ",
+      "direccion": "ciudad de mexico",
+      "ciudad": "Medellin",
+      "fechaNacimiento": "2026-09-02",
+      "correo": "mario744@ru.com",
+      "celular": "345678678",
+      "id": "kup5Il5UepU"
+    },
+    {
+      "tipoDocumento": "TI",
+      "numeroDocumento": "234567878",
+      "nombre": "juana",
+      "apellido": "suaza",
+      "direccion": "parque central ",
+      "ciudad": "Medellin",
+      "fechaNacimiento": "2026-09-24",
+      "correo": "juana@gmai.co",
+      "celular": "345678903",
+      "id": "airDPHQ54xo"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
