@@ -1,45 +1,25 @@
-const db = require('../config/db');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
 
-// Obtener todas las  personas
-exports.getAll = (callback) => {
-    db.query(
-        'SELECT * FROM usuarios',
-        callback
-    );
-};
+const Persona = sequelize.define('Persona', {
 
-// Obtener  ID
-exports.getById = (id, callback) => {
-    db.query(
-        'SELECT * FROM usuarios WHERE id = ?',
-        [id],
-        callback
-    );
-};
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
 
-// Crear una nueva persona
-exports.create = (usuario, callback) => {
-    db.query(
-        'INSERT INTO usuarios (nombre, email) VALUES (?, ?)',
-        [usuario.nombre, usuario.email],
-        callback
-    );
-};
+    nombre: {
+        type: DataTypes.STRING(100)
+    },
 
-// Actualizar una persona
-exports.update = (id, usuario, callback) => {
-    db.query(
-        'UPDATE usuarios SET nombre = ?, email = ? WHERE id = ?',
-        [usuario.nombre, usuario.email, id],
-        callback
-    );
-};
+    email: {
+        type: DataTypes.STRING(100)
+    }
 
-// Eliminar una persona
-exports.delete = (id, callback) => {
-    db.query(
-        'DELETE FROM usuarios WHERE id = ?',
-        [id],
-        callback
-    );
-};
+}, {
+    tableName: 'persona',
+    timestamps: false
+});
+
+module.exports = Persona;

@@ -1,18 +1,28 @@
+require('dotenv').config();
+
 const express = require('express');
+const sequelize = require('./config/db');
 
 const app = express();
 
-const db = require('./config/db');
+app.use(express.json());
 
 const usuarioRoutes = require('./routes/usuario.routes');
 
-// Permitir recibir JSON
-app.use(express.json());
-
-// Rutas de usuarios
 app.use('/usuarios', usuarioRoutes);
 
-app.listen(3002, () => {
-    console.log('Servidor corriendo en http://localhost:3002');
-});
+sequelize.authenticate()
+    .then(() => {
 
+        console.log('Conectado a SQL Server');
+
+        app.listen(3000, () => {
+            console.log('Servidor corriendo en http://localhost:3000');
+        });
+
+    })
+    .catch((error) => {
+
+        console.error('Error de conexión:', error);
+
+    });

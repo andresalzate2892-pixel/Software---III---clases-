@@ -1,113 +1,98 @@
-const usuarioService = require('../services/usuario.service');
+const usuarioService = require('../services/service.persona');
 
-// GET /personas
-exports.getAll = (req, res) => {
+exports.getAll = async (req, res) => {
+    try {
+        const personas = await personaService.getAll();
 
-    personaService.getAll((err, results) => {
+        res.json(personas);
 
-        if (err) {
-            return res.status(500).json({
-                error: 'Error al obtener las personas'
-            });
-        }
-
-        res.json(results);
-    });
-};
-
-
-// GET /personas/:id
-exports.getById = (req, res) => {
-
-    usuarioService.getById(req.params.id, (err, results) => {
-
-        if (err) {
-            return res.status(500).json({
-                error: 'Error al obtener la persona'
-            });
-        }
-
-        if (results.length === 0) {
-            return res.status(404).json({
-                error: 'Persona no encontrada'
-            });
-        }
-
-        res.json(results[0]);
-    });
-};
-
-
-// POST /personas
-exports.create = (req, res) => {
-
-    usuarioService.create(req.body, (err, result) => {
-
-        if (err) {
-            return res.status(500).json({
-                error: 'Error al crear la persona'
-            });
-        }
-
-        res.status(201).json({
-            id: result.insertId,
-            nombre: req.body.nombre,
-            email: req.body.email
+    } catch (error) {
+        res.status(500).json({
+            mensaje: 'Error al obtener personas',
+            error: error.message
         });
-    });
+    }
 };
 
 
-// PUT /personas/:id
-exports.update = (req, res) => {
+exports.getById = async (req, res) => {
+    try {
+        const persona = await personaService.getById(req.params.id);
 
-    usuarioService.update(
-        req.params.id,
-        req.body,
-        (err, result) => {
-
-            if (err) {
-                return res.status(500).json({
-                    error: 'Error al actualizar la persona'
-                });
-            }
-
-            if (result.affectedRows === 0) {
-                return res.status(404).json({
-                    error: 'Persona no encontrada'
-                });
-            }
-
-            res.json({
-                mensaje: 'Persona actualizada'
+        if (!persona) {
+            return res.status(404).json({
+                mensaje: 'Persona no encontrada'
             });
         }
-    );
+
+        res.json(persona);
+
+    } catch (error) {
+        res.status(500).json({
+            mensaje: 'Error al obtener persona',
+            error: error.message
+        });
+    }
 };
 
 
-// DELETE /personas/:id
-exports.delete = (req, res) => {
+exports.create = async (req, res) => {
+    try {
+        const persona = await personaService.create(req.body);
 
-    usuarioService.delete(
-        req.params.id,
-        (err, result) => {
+        res.status(201).json(persona);
 
-            if (err) {
-                return res.status(500).json({
-                    error: 'Error al eliminar la persona'
-                });
-            }
+    } catch (error) {
+        res.status(500).json({
+            mensaje: 'Error al crear persona',
+            error: error.message
+        });
+    }
+};
 
-            if (result.affectedRows === 0) {
-                return res.status(404).json({
-                    error: 'Persona no encontrada'
-                });
-            }
 
-            res.json({
-                mensaje: 'Persona eliminada'
+exports.update = async (req, res) => {
+    try {
+        const persona = await personaService.update(
+            req.params.id,
+            req.body
+        );
+
+        if (!persona) {
+            return res.status(404).json({
+                mensaje: 'Persona no encontrada'
             });
         }
-    );
+
+        res.json(persona);
+
+    } catch (error) {
+        res.status(500).json({
+            mensaje: 'Error al actualizar persona',
+            error: error.message
+        });
+    }
+};
+
+
+exports.delete = async (req, res) => {
+    try {
+        const eliminado = await personaService.delete(req.params.id);
+
+        if (!eliminado) {
+            return res.status(404).json({
+                mensaje: 'Persona no encontrada'
+            });
+        }
+
+        res.json({
+            mensaje: 'Persona eliminada correctamente'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            mensaje: 'Error al eliminar persona',
+            error: error.message
+        });
+    }
 };

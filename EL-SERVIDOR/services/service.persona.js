@@ -1,21 +1,37 @@
-const usuarioModel = require('../models/usuario.model');
+const Usuario = require('../models/usuario.model');
 
-exports.getAll = (callback) => {
-    usuarioModel.getAll(callback);
+exports.getAll = async () => {
+    return await Persona.findAll();
 };
 
-exports.getById = (id, callback) => {
-    usuarioModel.getById(id, callback);
+exports.getById = async (id) => {
+    return await Persona.findByPk(id);
 };
 
-exports.create = (usuario, callback) => {
-    usuarioModel.create(usuario, callback);
+exports.create = async (data) => {
+    return await Persona.create(data);
 };
 
-exports.update = (id, usuario, callback) => {
-    usuarioModel.update(id, usuario, callback);
+exports.update = async (id, data) => {
+
+    const persona = await Persona.findByPk(id);
+
+    if (!persona) {
+        return null;
+    }
+
+    return await persona.update(data);
 };
 
-exports.delete = (id, callback) => {
-    usuarioModel.delete(id, callback);
+exports.delete = async (id) => {
+
+    const persona = await Persona.findByPk(id);
+
+    if (!persona) {
+        return null;
+    }
+
+    await persona.destroy();
+
+    return true;
 };
