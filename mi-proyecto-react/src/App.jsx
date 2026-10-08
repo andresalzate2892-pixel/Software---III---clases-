@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const URL = 'http://localhost:3000/personas'
+  const URL = 'http://localhost:3002/personas'
 
   const [tipoDocumento, setTipoDocumento] = useState('')
   const [numeroDocumento, setNumeroDocumento] = useState('')
